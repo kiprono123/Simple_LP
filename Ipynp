@@ -1,0 +1,32 @@
+import numpy as np
+from scipy.optimize import linprog
+
+# Coefficients of the objective function (cost per unit including holding cost)
+c = [60, 36]  # $60 for Product A, $36 for Product B
+
+# Coefficients for the inequality constraints
+# Each row corresponds to a constraint
+A = [
+    [2, 1],   # Storage space constraint coefficients
+    [-1, 0],  # Demand constraint for Product A (x1 >= 100)
+    [0, -1]   # Demand constraint for Product B (x2 >= 150)
+]
+
+# Right-hand side values for the inequality constraints
+b = [500, -100, -150]
+
+# Bounds for each variable (x1 and x2 must be non-negative)
+x0_bounds = (0, None)  # x1 >= 0
+x1_bounds = (0, None)  # x2 >= 0
+
+# Solve the linear programming problem
+result = linprog(c, A_ub=A, b_ub=b, bounds=[x0_bounds, x1_bounds], method='highs')
+
+# Check if the optimization was successful
+if result.success:
+    x1_opt, x2_opt = result.x
+    print(f"Optimal quantity of Product A to stock (x1): {x1_opt:.0f} units")
+    print(f"Optimal quantity of Product B to stock (x2): {x2_opt:.0f} units")
+    print(f"Minimum total cost: ${result.fun:.2f}")
+else:
+    print("Optimization failed. Please check the problem formulation.")
