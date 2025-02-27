@@ -1,4 +1,5 @@
 #simple_lp
+
 #Problem Description:
 
 An e-commerce company sells two products: Product A and Product B. The company needs to decide the optimal quantity of each product to stock to minimize total costs, which include purchasing costs and inventory holding costs. The company must also meet a minimum customer demand for each product and adhere to storage space limitations.​
